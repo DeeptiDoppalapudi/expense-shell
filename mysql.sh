@@ -10,6 +10,9 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
+echo "Please enter DB PWD"
+read -s mysql_root_password
+
 VALIDATE(){
    if [ $1 -ne 0 ]
    then
@@ -37,7 +40,29 @@ VALIDATE $? "Enabling My SQL Server"
 systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "Start  My SQL Server"
 
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
-VALIDATE $? "Setting Up root pwd"
+#mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+#VALIDATE $? "Setting Up root pwd"
+
+#Below code will be useful for Idempotent nature
+
+mysql -h db.daws78s.online -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
+if [$? -ne 0]
+then 
+mysql_secure_installation --set-root-pass ${mysql_root_password}
+VALIDATE $? "MySQL Root password setup"
+else
+echo -e "My SQL PWD already set up $Y SKIPPING $N"
+
+
+
+
+
+
+
+
+
+
+
+
 
 
