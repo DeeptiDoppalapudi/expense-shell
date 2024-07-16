@@ -55,7 +55,7 @@ cp /home/ec2-user/expense-shell/expense.conf /etc/nginx/default.d/expense.conf &
 VALIDATE $? "Copied front end  service"
 
 systemctl restart nginx &>>$LOGFILE
-Validate $? "Restart nginx"
+VALIDATE $? "Restart nginx"
 
 
 
