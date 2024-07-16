@@ -11,7 +11,7 @@ Y="\e[33m"
 N="\e[0m"
 
 echo "Please enter DB PWD"
-read -s mysql_root_password
+read  mysql_root_password
 
 VALIDATE(){
    if [ $1 -ne 0 ]
@@ -59,6 +59,7 @@ curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expen
 VALIDATE $? "Downloading the code"
 
 cd /app
+rm -rf /app/*
 unzip /tmp/backend.zip &>>$LOGFILE
 VALIDATE $? "Extracted backend code"
 
